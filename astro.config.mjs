@@ -9,5 +9,7 @@ export default defineConfig({
     actions: true
   },
   output: 'server',
-  adapter: vercel()
+  adapter: vercel({
+    runtime: 'nodejs22.x' 
+  })
 });
