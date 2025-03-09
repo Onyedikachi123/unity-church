@@ -1,0 +1,98 @@
+---
+import { Icon } from 'astro-icon/components'
+import { actions } from 'astro:actions'
+
+import { Image } from 'astro:assets'
+const bulletins = await actions.read_bulletins()
+
+const options: any = {
+  weekday: 'long',
+  day: '2-digit', // Use "2-digit" for leading zero in day
+  month: 'long',
+  year: 'numeric'
+}
+---
+
+<table>
+  <caption>Bulletins</caption>
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th>ID</th>
+      <th>Thumbnail</th>
+      <th>Bulletin Date</th>
+      <th>Speaker</th>
+      <th>
+        <div class='actions grid'>
+          Actions
+          <button
+            class='primary'
+            type='button'
+            hx-get='/partials/dashboard/bulletin/forms/new'
+            hx-target='#dashboard'
+          >
+            <Icon name='ion:add-circle-outline' />
+          </button>
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      bulletins.map((bulletin) => (
+        <tr>
+          <td>
+            <input type='checkbox' />
+          </td>
+          <td>{bulletin.id}</td>
+          <td>
+            <a href=`/bulletin/${bulletin.slug}` target="_blank">
+              <Image
+                src={
+                  bulletin.coverImageUrl
+                    ? bulletin.coverImageUrl.toString()
+                    : 'https://picsum.photos/id/24/560/315'
+                }
+                width={100}
+                height={56.5}
+                alt='Cover Image'
+                class='thumbnail'
+              />
+            </a>
+          </td>
+          <td>
+            {bulletin.sermonDate &&
+              new Date(bulletin.sermonDate.toString()).toLocaleDateString(
+                'en-GB',
+                options
+              )}
+          </td>
+          <td>{bulletin.sermonPreacher}</td>
+          <td>
+            <div class='actions grid'>
+              <button
+                class='button primary button--primary'
+                type='button'
+                hx-get={`/dashboard/bulletin/${bulletin.slug}/edit`}
+                hx-target='#dashboard'
+                hx-push-url='false'
+              >
+                Edit
+              </button>
+
+              <button
+                class='button delete danger button--secondary'
+                type='button'
+                hx-delete={`/dashboard/bulletin/${bulletin.slug}/delete`}
+                hx-prompt='Delete the bulletin?'
+                hx-confirm='Are you sure'
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

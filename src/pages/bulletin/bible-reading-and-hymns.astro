@@ -1,0 +1,18 @@
+---
+// import getBulletin from '../data/bulletins'
+import Layout from '../../layouts/Layout.astro'
+import BulletinPage from '../../components/BulletinPage.astro'
+import ServiceBulletin from '../../components/ServiceOrder.astro'
+import { actions } from 'astro:actions'
+const { slug } = Astro.params
+
+const bulletin = (
+  await actions.read_bulletin_by_slug({ slug: slug ?? '' })
+).pop()
+---
+
+<Layout pageTitle='Bible Reading and Hymns'>
+  <BulletinPage>
+    <ServiceBulletin bulletin={bulletin} />
+  </BulletinPage>
+</Layout>

@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets'
+import BackNavigation  from './BackNavigation.astro' // Import the BackNavigation component
+
+const { bulletin } = Astro.props
+---
+
+{
+  (
+    <section class="section--bulletin-cover">
+      <BackNavigation bulletin={bulletin} />
+      <Image
+        src={bulletin.coverImageUrl || ''}
+        width={560}
+        height={315}
+        alt='Bulletin Cover'
+        class='bulletin__thumbnail'
+      />
+    </section>
+  )
+}

@@ -1,0 +1,49 @@
+---
+import { db, desc, Bulletin } from 'astro:db'
+import { Picture } from 'astro:assets'
+
+const bulletins = await db
+  .select()
+  .from(Bulletin)
+  .orderBy(desc(Bulletin.sermonDate)).offset(1).limit(5)
+
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('en-NG', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+---
+
+
+<article class="bulletin-list">
+  <!-- if bulletins is empty, output "ook" -->
+  { bulletins.length === 0 ? 
+  <section class="no-results">
+    <p>
+      No bulletins available
+    </p>
+  </section>
+  
+  :  bulletins.map((bulletin) => (
+        <section>
+          <header>
+            <h2>{formatDate(String(bulletin.sermonDate))}</h2>
+          </header>
+         <a href=`/bulletin/${bulletin.slug}`>
+            <Picture
+            src={bulletin.coverImageUrl || ''}
+            width={560}
+            height={315}
+            alt='Bulletin Cover'
+            class='bulletin__thumbnail'
+          />
+         </a>
+        </section>
+      ))
+    }
+  
+</article>

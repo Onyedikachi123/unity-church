@@ -1,0 +1,19 @@
+---
+import { actions } from 'astro:actions'
+import DashboardLayout from '../../../layouts/DashboardLayout.astro'
+
+if (Astro.request.method === 'POST') {
+  console.log('Method:', Astro.request.method)
+
+  try {
+    const formData = await Astro.request.formData()
+    await actions.bulletin.create.safe(formData)
+    return Astro.redirect('/dashboard', 201)
+  } catch (error) {
+    console.log('error', error)
+    console.error(error)
+  }
+}
+---
+
+<DashboardLayout />

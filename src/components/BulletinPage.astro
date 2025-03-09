@@ -1,0 +1,37 @@
+---
+import { db, desc, eq, Bulletin } from 'astro:db'
+import BulletinCover from './BulletinCover.astro'
+import { Icon } from 'astro-icon/components'
+
+const { slug } = Astro.props
+
+let bulletins: any[] = []
+
+if (slug) {
+  bulletins = await db
+    .select()
+    .from(Bulletin)
+    .orderBy(desc(Bulletin.sermonDate))
+    .where(eq(Bulletin.slug, slug))
+    .limit(1)
+} else {
+  bulletins = await db
+    .select()
+    .from(Bulletin)
+    .orderBy(desc(Bulletin.sermonDate))
+    .limit(1)
+}
+
+// const bulletin = bulletins[0]
+const bulletin = Object.assign({}, ...bulletins)
+---
+
+<article id='top' class='bulletin-page'>
+  <BulletinCover bulletin={bulletin} />
+  <slot />
+  <nav class="nav--align-center">
+    <a href='#' class='nav__back-to-top'>
+      <Icon name='ion:arrow-up-circle' class={'icon'} />
+    </a>
+  </nav>
+</article>

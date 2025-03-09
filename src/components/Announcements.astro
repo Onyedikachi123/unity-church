@@ -1,0 +1,48 @@
+---
+import BackNavigation from './BackNavigation.astro'
+import { actions } from 'astro:actions'
+import { sections } from '../data/settings.ts'
+const { slug } = Astro.params
+
+const bulletin = (
+  await actions.read_bulletin_by_slug({ slug: slug ?? '' })
+).pop()
+
+const section = Object.assign({}, ...sections)
+---
+
+{
+  (
+    <article>
+      <section>
+        <BackNavigation bulletin={bulletin} />
+      </section>
+      <section class='announcement'>
+        <h3>New to Unity Hill Chapel</h3>
+        <p set:html={section.newToUnityHillChapel} />
+      </section>
+      <section class='announcement'>
+        <h3>Announcements</h3>
+        <p set:html={bulletin?.announcements} />
+      </section>
+      <section class='announcement'>
+        <h3>Unity Hill Chapel Building Fund</h3>
+        <p set:html={section.buildingFund} />
+      </section>
+      <section class='announcement'>
+        <h3>Birthdays for the Week</h3>
+        <div set:html={bulletin?.birthdays} />
+      </section>
+      <section class='announcement'>
+        <h3>Birthdays and Anniversaries</h3>
+        <p set:html={section.birthdayNotice} />
+      </section>
+      <section class='announcement'>
+        <h3>Prayers</h3>
+        <p set:html={section.prayerNotice} />
+      </section>
+    </article>
+  )
+}
+
+<script data-cfasync='false' src='/js/email-decode.min.js'></script>

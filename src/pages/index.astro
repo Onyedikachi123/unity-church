@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import MenuLink from '../components/MenuLink.astro'
+import { Image } from 'astro:assets'
+
+import { actions } from 'astro:actions'
+
+const cover = await actions.latest_coverpage()
+const imagUrl = cover.map((cover) => (cover.imageUrl ? cover.imageUrl : ''))
+---
+
+<BaseLayout pageTitle='Bulletin'>
+  <Image
+    src={imagUrl[0]}
+    width={560}
+    height={360}
+    alt='Buletin Cover'
+    class='hero bulletin__cover'
+    slot='header'
+  />
+
+  <div>
+    <aside class='aside--adjusted'>
+      <nav>
+        <ul>
+         <MenuLink
+            target='/bulletin/spotlight-of-the-week'
+            text='Spotlight of the week'
+          />
+          <MenuLink
+            target='/bulletin/bible-reading-and-hymns'
+            text='Bible Reading and Hymns'
+          />
+          <MenuLink target='/bulletin/weekly-updates' text='Weekly Updates' />
+          <MenuLink target='/bulletin/get-to-know-us' text='Get to Know Us' />
+          <MenuLink target='/bulletin/giving' text='Giving' />
+          <MenuLink target='/bulletin' text='Previous Bulletins' />
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</BaseLayout>

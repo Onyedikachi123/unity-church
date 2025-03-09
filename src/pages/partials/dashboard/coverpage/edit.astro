@@ -1,0 +1,55 @@
+---
+export const partial = true
+
+import { actions } from 'astro:actions'
+
+const cover = await actions.latest_coverpage()
+const imageUrl = cover.map((cover) => cover.imageUrl? cover.imageUrl.toString() : '')
+const id = cover.map((cover) => cover.id)
+
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData()
+    await actions.update_coverpage(data)
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('error: ', error.message)
+    }
+  }
+}
+---
+
+{
+  Astro.request.method === 'GET' ? (
+    <div>
+      <form method='POST' astro-data-reload>
+        {/* <div class='form-group'> */}
+        <label for='imageUrl'>Image Url</label>
+        <div role='group'>
+          <input type='text' id='imageUrl' name='imageUrl' value={imageUrl} />
+          <button
+            type='submit'
+            hx-trigger='click'
+            hx-target='.coverpage'
+            hx-post='/partials/dashboard/coverpage/edit'
+          >
+            Update
+          </button>
+        </div>
+        {/* </div> */}
+        <input type='hidden' name='id' value={id.toString()} />
+      </form>
+    </div>
+  ) : (
+    <div>
+      <div>
+        <caption class='success'>Coverpage Updated!</caption>
+      </div>
+      <div>
+        <button class='outline' hx-get='/dashboard'>
+          Back to dashboard
+        </button>
+      </div>
+    </div>
+  )
+}

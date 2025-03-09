@@ -1,0 +1,9 @@
+---
+import { Icon } from "astro-icon/components";
+const { target, text } = Astro.props
+---
+<>
+<li>
+    <a href=`${target}` class='menu__link'>{text} <Icon name="ion:arrow-forward-circle" class="icon" /></a>
+</li>
+</>

@@ -1,0 +1,346 @@
+/* @import "open-props/style"; */
+@import "@picocss/pico";
+@import "@picocss/pico/css/pico.colors.min.css";
+
+:root {
+	--primary-color: #fcc864;
+	--secondary-color: #C32D84;
+	--tertiary-color: #ccc;
+	--accent-color: #FF8C00;
+	--success-color: #28a745;
+	--error-color: var(--pico-color-pink-450);
+	--warning-color: #ffc107;
+	--info-color: #17a2b8;
+	--light-color: #f8f9fa;
+	--dark-color: #343a40;
+	--white-color: #fff;
+	--black-color: #000;
+	--gray-color: #6c757d;
+	--breakpoint-sm: 576px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 992px;
+	--breakpoint-xl: 1200px;
+	--breakpoint-xxl: 1400px;
+	--text-color: var(--gray-8);
+	--font-size-sm: 14px;
+	--font-size-md: 16px;
+	--font-size-lg: 18px;
+	--font-size-xl: 20px;
+	--font-size-xxl: 24px;
+	--font-family: var(--font-sans);
+	--line-height: 1.5;
+	--border-radius: var(--pico-border-radius);
+	--landscape: 16 / 9;
+}
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 2rem;
+	/* If you need scroll offset try this magic! */
+	min-height: max-content;
+}
+
+/* CSS Reset */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* General Styles */
+body {
+	font-family: var(--font-family);
+	background-color: inherit;
+	color: var(--text-color);
+}
+
+article ol {
+	padding-inline: 1rem;
+	margin-inline: 1rem;
+}
+
+.container {
+	background: var(--white-color);
+	max-width: 60ch;
+}
+
+.aside--adjusted {
+	margin-inline: 1rem;
+}
+
+.no-results {
+	text-align: center;
+
+	p {
+		margin: 1rem 0;
+		color: var(--text-color);
+	}
+}
+
+button,
+input,
+select,
+textarea {
+	border: solid var(--border-size-1) var(--purple-2);
+	border-radius: var(--border-radius);
+	color: var(--text-color);
+	font: inherit;
+	font-size: 1rem;
+	margin: inherit;
+	padding: 0.5rem;
+}
+
+input,
+select,
+textarea {
+	width: 100%;
+}
+
+h1 {
+	margin: inherit;
+	text-align: center;
+}
+
+ul {
+	margin: 0 0 0 1rem;
+	padding-left: 0.5rem;
+}
+
+ul li {
+	padding: 0.625rem 0 0;
+}
+
+/* Component Specific Styles */
+
+header {
+	border-radius: 10px 10px 0 0;
+	text-align: center;
+}
+
+header nav {
+	text-align: left;
+}
+
+form {
+	display: grid;
+	gap: 1rem;
+}
+
+.errors {
+	background: var(--error-color);
+	border-radius: var(--border-radius);
+	color: var(--white-color);
+	margin-bottom: 1rem;
+	padding: 1rem;
+	display: none;
+}
+
+.errors p {
+	color: inherit;
+}
+
+.form__intro {
+	padding: 1rem 0;
+}
+
+.form-group {
+	margin-bottom: 1rem;
+}
+
+.form-group label {
+	display: block;
+}
+
+.button-group {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	grid-template-areas: "left right";
+	gap: 1rem;
+}
+
+.button-group__left,
+.button-group__right {
+	display: flex;
+	gap: 1rem;
+}
+
+.button-group__left {
+	grid-area: right;
+}
+
+.button-group__right {
+	grid-area: right;
+}
+
+.submit {
+	display: flex;
+	justify-content: space-between;
+}
+
+.actions.grid {
+    gap: 2.5rem;
+}
+
+form .form-group {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 1rem;
+}
+
+form .submit.form-group {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+footer {
+	border-radius: 0 0 10px 10px;
+	color: #2e2b2b;
+	padding: 1rem;
+	text-align: center;
+}
+
+.page-wrapper {
+	background: var(--light-color);
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	min-height: 100vh;
+	padding: 1rem 0;
+}
+
+header {
+	text-align: center;
+
+	h2 {
+		color: var(--secondary-color);
+		font-size: var(--font-size-fluid-1);
+	}
+}
+
+.section--bulletin-cover {
+	display: grid;
+	place-content: center;
+}
+
+.bulletin__cover,
+.bulletin__thumbnail {
+	aspect-ratio: var(--landscape);
+	border-radius: var(--radius-2);
+	width: 100%;
+	max-width: 100%;
+}
+
+.menu {
+
+	li {
+		margin-bottom: 0.5rem;
+	}
+
+	li:last-of-type {
+		margin-bottom: 0;
+	}
+}
+
+.menu__link {
+	background: var(--secondary-color);
+	color: var(--white-color);
+	padding: 1rem 0.5rem 1rem 2rem;
+	display: flex;
+	text-decoration: none;
+	justify-content: end;
+	align-items: center;
+	margin-bottom: 0.25rem;
+	gap: 0.25rem;
+}
+
+.menu__link:hover {
+	background: var(--accent-color);
+}
+
+.menu__link .icon {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+.nav--align-center {
+	justify-content: center;
+}
+
+.nav--back {
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	margin-bottom: var(--pico-block-spacing-vertical);
+}
+
+.nav--back__heading {
+	margin-bottom: unset;
+}
+
+.nav__back-to-top,
+.nav__back-link {
+	color: var(--secondary-color);
+	text-decoration: none;
+}
+
+.nav__back-link {
+	display: inline-flex;
+	align-items: center;
+}
+
+.nav__back-to-top:hover,
+.nav__back-link:hover {
+	color: var(--accent-color);
+}
+
+.nav__back-to-top .icon,
+.nav__back-link .icon {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+.nav__back-link .icon {
+	margin-right: 0.2rem;
+}
+
+.button {
+	display: inline-flex;
+	min-width: min-content;
+	border: solid 1px var(--shadow);
+	padding: 0.8rem 1.8rem;
+	background: inherit;
+	color: inherit;
+	border-radius: var(--border-radius);
+}
+
+.button:hover,
+.button--primary:hover,
+.button-secondary:hover {
+	background: var(--accent-color);
+}
+
+.button--primary {
+	background: var(--secondary-color);
+	color: var(--white-color);
+}
+
+.button--secondary {
+	background: var(--dark-color);
+	color: var(--white-color)
+}
+
+@scope(.bank-details) {
+
+	/* Add your scoped styles here */
+	:scope {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	dd, b {
+		font-weight: 500;
+	}
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+	/* Add your responsive styles here */
+}

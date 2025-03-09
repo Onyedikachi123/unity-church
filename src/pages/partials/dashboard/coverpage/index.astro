@@ -1,0 +1,37 @@
+---
+export const partial = true
+
+import { actions } from 'astro:actions'
+
+import { Image } from 'astro:assets'
+const imageUrl = (await actions.latest_coverpage()).map(
+  (cover) => cover.imageUrl
+)
+---
+
+<div class='coverpage'>
+  <caption>Cover Page</caption>
+  <div>
+    <a href='#'>
+      <Image
+        src={imageUrl
+          ? imageUrl.toString()
+          : 'https://picsum.photos/id/24/560/315'}
+        width={560}
+        height={56.5}
+        alt='Cover Image'
+        class='thumbnail'
+      />
+    </a>
+  </div>
+  <div class='actions'>
+    <button
+      class='outline'
+      hx-get='/partials/dashboard/coverpage/edit'
+      hx-trigger='click'
+      hx-target='.coverpage .actions'
+    >
+      Change Image
+    </button>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+---
+import getBulletin from '../data/bulletins'
+import BackNavigation from './BackNavigation.astro'
+import { actions } from 'astro:actions'
+import { sections } from "../data/settings.ts"
+import { Image } from 'astro:assets'
+
+// Fetch bulletin and section data
+const { slug } = Astro.params
+
+const bulletin = (
+  await actions.read_bulletin_by_slug({ slug: slug ?? '' })
+).pop()
+
+const section = Object.assign({}, ...sections)
+
+// Fetch the cover image for Spotlight
+const cover = await actions.latest_coverpage()
+const imagUrl = cover.map((cover) => (cover.imageUrl ? cover.imageUrl : ''))
+---
+
+<article>
+  <section>
+    <BackNavigation bulletin={bulletin} />
+  </section>
+  <section class='announcement'>
+    
+    <div class="image-container">
+      <Image
+        src={imagUrl[0]}
+        width={560}
+        height={360}
+        alt='Spotlight Image'
+        class='spotlight__cover'
+      />
+    </div>
+    <p set:html={section.newToUnityHillChapel} />
+  </section>
+</article>
+
+<style>
+  .image-container {
+    display: flex;
+    justify-content: center;  
+    margin-bottom: 1rem;  
+  }
+
+ 
+</style>

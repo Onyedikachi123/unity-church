@@ -1,0 +1,40 @@
+---
+import '../styles/dashboard.css'
+import { ViewTransitions } from 'astro:transitions'
+import Sidebar from '../components/Sidebar.astro' // Import the Sidebar component here
+const { pageTitle } = Astro.props
+---
+
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>{pageTitle}</title>
+
+    <ViewTransitions />
+    <script src='https://unpkg.com/htmx.org'></script>
+  </head>
+  <body>
+    <header class='container-fluid'>
+      <hgroup>
+        <h1>{pageTitle || 'Dashboard'}</h1>
+        <!-- <h2>Welcome, {{ user.name }}</h2> -->
+      </hgroup>
+    </header>
+    <div class='container-fluid'>
+      <div class='dashboard-container'>
+        <aside>
+          <Sidebar /> <!-- Use the Sidebar component here -->
+        </aside>
+        <main id="dashboard">
+          <slot />
+        </main>
+      </div>
+    </div>
+    <footer class='container-fluid'>
+      <p>&copy; 2024 Unity Hill Chapel</p>
+    </footer>
+  </body>
+</html>

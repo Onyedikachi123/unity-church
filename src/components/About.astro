@@ -1,0 +1,80 @@
+---
+import getBulletin from '../data/bulletins'
+import BackNavigation from './BackNavigation.astro'
+
+const { slug } = Astro.props
+const bulletin = await getBulletin(slug)
+
+const sections = [
+  {
+    welcome: `Unity Hill Chapel would like to welcome you to our ${bulletin.serviceType}. We pray' that you are blessed as you worship with us and that you leave renewed`
+  },
+  {
+    whoWeAre:
+      'Unity Hill Chapel is a fellowship built on Love, where we come together in Unity to grow and to become all has us to be.'
+  },
+  {
+    ourMission: [
+      'Unity - Demonstrate that there is power in unity',
+      'Evangelism - Win souls for Christ',
+      'Growth - Develop members to be spiritually mature',
+      'Purpose - Develop members to be vessels for the work of God',
+      'Pastoral Care - Demonstrate the values of an effective Christian community',
+      'Community Impact our local community by Showing the love of God',
+      'Welfare - Help the needy'
+    ]
+  },
+  {
+    ourValues: [
+      'Transparency',
+      'Simplicity',
+      'Excellence',
+      'Unity I Lovel Community'
+    ]
+  },
+  {
+    governance:
+      'Unity Hill Chapel was set up by a body of Trustees who oversee the Church and a Governing Council who manage the day to day running of the Church.'
+  }
+]
+
+const section = Object.assign({}, ...sections)
+---
+
+{
+  (
+    <article>
+      <section>
+        <BackNavigation bulletin={bulletin} />
+      </section>
+      <section>
+        <h3>Welcome</h3>
+        <p>{section.welcome}</p>
+      </section>
+      <section>
+        <h3>Who We Are</h3>
+        <p>{section.whoWeAre}</p>
+      </section>
+      <section>
+        <h3>Our Mission</h3>
+        <ul>
+          {section.ourMission.map((mission: string) => (
+            <li>{mission}</li>
+          ))}
+        </ul>
+      </section>
+      <section>
+        <h3>Our Values</h3>
+        <ul>
+          {section.ourValues.map((value: string) => (
+            <li>{value}</li>
+          ))}
+        </ul>
+      </section>
+      <section>
+        <h3>Governance</h3>
+        <p>{section.governance}</p>
+      </section>
+    </article>
+  )
+}

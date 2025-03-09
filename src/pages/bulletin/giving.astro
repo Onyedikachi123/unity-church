@@ -1,0 +1,54 @@
+---
+// import About from "../../components/About.astro"
+import { actions } from 'astro:actions'
+import BackNavigation from '../../components/BackNavigation.astro'
+import Layout from '../../layouts/Layout.astro'
+
+const { slug } = Astro.params
+
+const bulletin = (
+  await actions.read_bulletin_by_slug({ slug: slug ?? '' })
+).pop()
+---
+
+<Layout pageTitle='Giving'>
+  <article>
+    <section>
+      <BackNavigation bulletin={bulletin} />
+    </section>
+    <section>
+      <p class='intro'>
+        You can pay your tithe and offering online or through bank transfers<br
+        />
+        <span>
+          <a
+            class='secondary'
+            href='https://unityhillchapel.com/giving/online/offering'
+            target="_blank"
+            >https://unityhillchapel.com/giving/online/offering</a
+          ></span
+        >
+      </p>
+      <h3>Unity Hill Chapel Bank Details</h3>
+      <p>Tithes, Donations and Offerings</p>
+      <div class='bank-details'>
+        <dl>
+          <dd>GT Bank</dd>
+          <dt><b class="secondary">A/C Name:</b> unity Hill Chapel</dt>
+          <dt><b class="secondary">A/C Number:</b> 0430791562</dt>
+        </dl>
+        <dl>
+          <dd>Zenith Bank</dd>
+          <dt><b class="secondary">A/C Name:</b> Unity Hill Chapel</dt>
+          <dt><b class="secondary">A/C Number:</b> 1016179799</dt>
+        </dl>
+        <dl>
+          <dd>UHC Building Fund Acount</dd>
+          <dd>Zenith Bank</dd>
+          <dt><b class="secondary">A/C Name:</b> Unity Hill Chapel</dt>
+          <dt><b class="secondary">A/C Number:</b> 1016827966</dt>
+        </dl>
+      </div>
+    </section>
+  </article>
+</Layout>

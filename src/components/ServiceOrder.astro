@@ -1,0 +1,125 @@
+---
+const { bulletin } = Astro.props
+
+
+
+
+const sections = [
+  {
+    firstHymnTitle: `${bulletin.firstHymnTitle}`
+  },
+  {
+    firstHymnLyrics: `${bulletin.firstHymnLyrics}`
+  },
+    {
+    secondHymnTitle: `${bulletin.secondHymnTitle}`
+  },
+  {
+    secondHymnLyrics: `${bulletin.secondHymnLyrics}`
+  },
+    {
+    thirdHymnTitle: `${bulletin.thirdHymnTitle}`
+  },
+  {
+    thirdHymnLyrics: `${bulletin.thirdHymnLyrics}`
+  },
+    {
+    fourthHymnTitle: `${bulletin.fourthHymnTitle}`
+  },
+  {
+    fourthHymnLyrics: `${bulletin.fourthHymnLyrics}`
+  },
+    {
+    fifthHymnTitle: `${bulletin.fifthHymnTitle}`
+  },
+  {
+    fifthHymnLyrics: `${bulletin.fifthHymnLyrics}`
+  },
+    {
+    sixthHymnTitle: `${bulletin.sixthHymnTitle}`
+  },
+  {
+    sixthHymnLyrics: `${bulletin.sixthHymnLyrics}`
+  },
+    {
+    seventhHymnTitle: `${bulletin.seventhHymnTitle}`
+  },
+  {
+    seventhHymnLyrics: `${bulletin.seventhHymnLyrics}`
+  },
+    {
+    eighthHymnTitle: `${bulletin.eighthHymnTitle}`
+  },
+  {
+    eighthHymnLyrics: `${bulletin.eighthHymnLyrics}`
+  },
+    {
+    ninethHymnTitle: `${bulletin.ninethHymnTitle}`
+  },
+  {
+    ninethHymnLyrics: `${bulletin.ninethHymnLyrics}`
+  },
+  {
+    closingHymnTitle: `${bulletin.closingHymnTitle}`
+  },
+  {
+    closingHymnLyrics: `${bulletin.closingHymnLyrics}`
+  }
+]
+
+const section = Object.assign({}, ...sections)
+---
+
+{
+  (
+    <>
+      <section>
+        <h4>
+          Bible Reading &mdash; {bulletin.bibleReadingVerse} (
+          {bulletin.bibleVersion})
+        </h4>
+        <div set:html={bulletin.bibleReadingText} />
+      </section>
+      <section>
+        <h4>First Hymn: {section.firstHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.firstHymnLyrics} />
+      </section>
+        <section>
+        <h4>Second Hymn: {section.secondHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.secondHymnLyrics} />
+      </section>
+        <section>
+        <h4>Third Hymn: {section.thirdHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.thirdHymnLyrics} />
+      </section>
+        <section>
+        <h4>Fourth Hymn: {section.fourthHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.fourthHymnLyrics} />
+      </section>
+        <section>
+        <h4>Fifth Hymn: {section.fifthHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.fifthHymnLyrics} />
+      </section>
+        <section>
+        <h4>Sixth Hymn: {section.sixthHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.sixthHymnLyrics} />
+      </section>
+        <section>
+        <h4>Seventh Hymn: {section.seventhHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.seventhHymnLyrics} />
+      </section>
+        <section>
+        <h4>Eighth Hymn: {section.eighthHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.eighthHymnLyrics} />
+      </section>
+        <section>
+        <h4>Nineth Hymn: {section.ninethHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.ninethHymnLyrics} />
+      </section>
+      <section>
+        <h4>Closing Hymn: {section.closingHymnTitle}</h4>
+        <p class='hymn-lyriics' set:html={section.closingHymnLyrics} />
+      </section>
+    </>
+  )
+}

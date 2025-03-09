@@ -1,0 +1,19 @@
+<nav>
+    <ul hx-boost='true'>
+      <li>
+        <button
+          class='outline button--full-width'
+          hx-get='/partials/dashboard/bulletin'
+          hx-target='main'>Dashboard</button>
+      </li>
+      <li>
+        <button
+          class='outline button--full-width'
+          hx-get='/partials/dashboard/coverpage/edit'
+          hx-target='.coverpage .actions'
+          hx-trigger='click'>Edit Coverpage</button
+        >
+      </li>
+      <li><a href='#' class='disabled'>Users</a></li>
+    </ul>
+  </nav>

@@ -1,0 +1,23 @@
+---
+import { Icon } from 'astro-icon/components'
+
+const { bulletin } = Astro.props
+
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('en-NG', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+---
+
+<nav class='grid nav--back'>
+  <a href='/' class='nav__back-link'>
+    <Icon name='ion:arrow-back-circle' class={'icon'} /> Back
+  </a>
+  <h3 class='nav--back__heading'>
+    {bulletin ? formatDate(String(bulletin.sermonDate)) : ''}
+  </h3>
+</nav>

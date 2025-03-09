@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import BulletinPage from '../../components/BulletinPage.astro'
+import ServiceOrder from '../../components/ServiceOrder.astro'
+import { actions } from 'astro:actions'
+
+const { slug } = Astro.params
+
+const bulletin = (
+  await actions.read_bulletin_by_slug({ slug: slug ?? '' })
+).pop()
+---
+
+<Layout pageTitle='Bulletin'>
+  <BulletinPage slug={slug}>
+    <ServiceOrder bulletin={bulletin} />
+  </BulletinPage>
+</Layout>

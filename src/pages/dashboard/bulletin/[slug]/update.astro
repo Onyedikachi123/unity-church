@@ -1,0 +1,24 @@
+---
+import { actions } from 'astro:actions'
+import DashboardLayout from '../../../../layouts/DashboardLayout.astro'
+const { slug } = Astro.params
+
+if (Astro.request.method === 'POST') {
+  console.log('Method:', Astro.request.method)
+
+  try {
+      const bulletin = await actions.bulletin.find({ slug: slug ?? ''})
+      console.log('bulletin ID:', bulletin[0]?.id);
+      
+      const formData = await Astro.request.formData() 
+      const status = await actions.bulletin.update.safe(formData)
+      console.log('status', status)
+    return Astro.redirect('/dashboard', 302)
+  } catch (error) {
+      console.log('error', error)
+      console.error(error)
+  }
+}
+---
+
+<DashboardLayout />

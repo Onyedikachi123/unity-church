@@ -1,0 +1,237 @@
+---
+import { Image } from 'astro:assets'
+import { actions } from 'astro:actions'
+
+import { serviceTypes, bibleVersions } from '../../../../data/settings.ts'
+
+const { slug } = Astro.params
+
+const bulletin: any =
+  (await actions.read_bulletin_by_slug({ slug: slug ?? '' })).pop() ?? {}
+
+const date = bulletin.sermonDate
+  ? new Date(bulletin.sermonDate).toISOString().slice(0, 10)
+  : new Date().toISOString().slice(0, 10).toString()
+---
+
+<article>
+  <h2>{bulletin.slug}</h2>
+  <div class='errors'>
+    <!-- loop through errors -->
+    <p>There was an error with your submission</p>
+    <p id='errors'></p>
+  </div>
+  <form class='form' id='bulletin-form' method='PUT'>
+    <input type='hidden' name='slug' value={slug} />
+    <p class='form__intro'>Use this form to submit a bulletin.</p>
+    <div class='form-group'>
+      <label for='coverImageUrl'>
+        <Image
+          src={bulletin.coverImageUrl
+            ? bulletin.coverImageUrl.toString()
+            : 'https://picsum.photos/560/315'}
+          alt='Bulletin Cover Image'
+          width='100'
+          height='100'
+        />&nbsp; CoverImageUrl
+      </label>
+      <input
+        type='text'
+        id='coverImageUrl'
+        name='coverImageUrl'
+        value={bulletin.coverImageUrl
+          ? bulletin.coverImageUrl.toString()
+          : 'https://picsum.photos/560/315'}
+      />
+    </div>
+    <div class='form-group'>
+      <label for='sermonDate'>Sermon Date</label>
+      <input type='date' id='sermonDate' name='sermonDate' value={date} />
+    </div>
+    <!-- serviceType field -->
+    <div class='form-group'>
+      <label for='serviceType'>Service Type</label>
+      <select id='serviceType' name='serviceType'>
+        {
+          serviceTypes.map((serviceType) => (
+            <option
+              value={serviceType}
+              selected={bulletin.serviceType.toString() === serviceType}
+            >
+              {serviceType}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+    <!-- sermonPreacher Field -->
+    <div class='form-group'>
+      <label for='sermon-preacher'>Sermon Preacher</label>
+      <input
+        type='text'
+        id='sermon-preacher'
+        name='sermonPreacher'
+        value={bulletin.sermonPreacher
+          ? bulletin.sermonPreacher.toString()
+          : ''}
+      />
+    </div>
+
+    <fieldset>
+      <legend>Bible Reading</legend>
+      <div class='form-group'>
+        <label for='bible-reading-verse'>Bible Reading Verse</label>
+        <input
+          type='text'
+          class='form-control'
+          id='bible-reading-verse'
+          name='bibleReadingVerse'
+          value={bulletin.bibleReadingVerse
+            ? bulletin.bibleReadingVerse.toString()
+            : ''}
+        />
+      </div>
+      <div class='form-group'>
+        <label for='bible-reading-text'>Bible Reading Text</label>
+        <textarea
+          class='form-control'
+          id='bible-reading-text'
+          name='bibleReadingText'
+        >
+          {
+            bulletin.bibleReadingText
+              ? bulletin.bibleReadingText.toString().trim()
+              : ''
+          }
+        </textarea>
+      </div>
+      <div class='form-group'>
+        <label for='bible-version'>Bible Version</label>
+        <select id='bible-version' name='bibleVersion'>
+          {
+            bibleVersions.map((bibleVersion) => (
+              <option
+                value={bibleVersion}
+                selected={bulletin.bibleVersion.toString() === bibleVersion}
+              >
+                {bibleVersion}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>First Hymn</legend>
+      <div class='form-group'>
+        <label for='first-hymn-title'>First Hymn Title</label>
+        <input
+          type='text'
+          id='first-hymn-title'
+          name='firstHymnTitle'
+          value={bulletin.firstHymnTitle
+            ? bulletin.firstHymnTitle.toString()
+            : ''}
+        />
+      </div>
+      <div class='form-group'>
+        <label for='first-hymn-lyrics'>First Hymn Lyrics</label>
+        <textarea id='first-hymn-lyrics' name='firstHymnLyrics'>
+          {
+            bulletin.firstHymnLyrics
+              ? bulletin.firstHymnLyrics.toString().trim()
+              : ''
+          }
+        </textarea>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Closing Hymn</legend>
+      <div class='form-group'>
+        <label for='closing-hymn-title'>Closing Hymn Title</label>
+        <input
+          type='text'
+          id='closing-hymn-title'
+          name='closingHymnTitle'
+          value={bulletin.closingHymnTitle
+            ? bulletin.closingHymnTitle.toString()
+            : ''}
+        />
+      </div>
+      <div class='form-group'>
+        <label for='closing-hymn-lyrics'>Closing Hymn Lyrics</label>
+        <textarea id='closing-hymn-lyrics' name='closingHymnLyrics'>
+          {
+            bulletin.closingHymnLyrics
+              ? bulletin.closingHymnLyrics.toString().trim()
+              : ''
+          }
+        </textarea>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Announcements</legend>
+      <div class='form-group'>
+        <label for='announcements'>Announcements</label>
+        <textarea id='announcements' name='announcements'>
+          {bulletin.announcements?.toString().trim() ?? ''}
+        </textarea>
+      </div>
+      <div class='form-group'>
+        <label for='birthdays'>Birthdays</label>
+        <textarea id='birthdays' name='birthdays'>
+          {bulletin.birthdays?.toString().trim() ?? ''}
+        </textarea>
+      </div>
+    </fieldset>
+    <div class='grid form-group'>
+      <div></div>
+      <div class='grid button-group__right'>
+        <button type='reset' class='button button--secondary'>Cancel</button>
+        <button
+          type='submit'
+          class='button button--primary'
+          hx-post={`/dashboard/bulletin/${bulletin.slug}/update`}
+          hx-target='body'
+          hx-push-url='false'>Update</button
+        >
+      </div>
+    </div>
+  </form>
+</article>
+
+<!-- <script>
+  import { isInputError, actions } from 'astro:actions'
+
+  const form = document.querySelector('#bulletin-form') as HTMLFormElement
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const formData = new FormData(form)
+    const { data, error } = await actions.update_bulletin.safe(formData)
+
+    if (data) {
+      form.reset()
+      window.location.href = '/dashboard'
+    }
+
+    if (error && isInputError(error)) {
+      const errorElement = document.querySelector(
+        '#errors'
+      ) as HTMLParagraphElement
+      errorElement.textContent = error.message
+      errorElement.style.display = 'block'
+
+      console.error(error.message)
+      console.error(error.fields)
+      return
+    }
+  })
+
+  form.addEventListener('reset', (event) => {
+    event.preventDefault()
+    form.reset()
+    window.location.href = '/dashboard'
+  })
+</script> -->

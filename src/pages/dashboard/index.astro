@@ -1,0 +1,22 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro'
+---
+
+<DashboardLayout>
+  <section
+    class='section overflow-auto'
+    hx-get='/partials/dashboard/coverpage'
+    hx-trigger='load'
+    hx-target='.cover'
+  >
+    <div class='cover'></div>
+  </section>
+  <section
+    class='section overflow-auto'
+    hx-get='/partials/dashboard/bulletin'
+    hx-trigger='load'
+    hx-target='.bulletins'
+  >
+    <div class='bulletins'></div>
+  </section>
+</DashboardLayout>

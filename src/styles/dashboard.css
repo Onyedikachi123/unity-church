@@ -1,0 +1,135 @@
+/* @import "open-props/style"; */
+@import "@picocss/pico";
+@import "@picocss/pico/css/pico.colors.min.css";
+
+:root {
+    --primary-color: #fcc864;
+    --secondary-color: #C32D84;
+    --tertiary-color: #ccc;
+    --accent-color: #FF8C00;
+    --success-color: #28a745;
+    --error-color: var(--pico-color-pink-450);
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --white-color: #fff;
+    --black-color: #000;
+    --gray-color: #6c757d;
+    --contrast-background: var(--pico-contrast-background);
+    --contrast: var(--pico-contrast);
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1400px;
+    --text-color: var(--gray-8);
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-xxl: 24px;
+    --font-family: var(--font-sans);
+    --line-height: 1.5;
+    --border-radius: var(--pico-border-radius);
+    --landscape: 16 / 9;
+    --block-spacing-horizontal: 1rem;
+    --block-spacing-vertical: 1rem;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+    /* If you need scroll offset try this magic! */
+    min-height: max-content;
+}
+
+/* CSS Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* General Styles */
+body {
+    font-family: var(--font-family);
+    background-color: inherit;
+    color: var(--text-color);
+}
+
+@scope(.dashboard-container) {
+
+    :scope {
+        display: grid;
+        grid-template-columns: 0.5fr 2fr;
+    }
+
+    aside,
+    main {
+        padding: var(--block-spacing-vertical) var(--block-spacing-horizontal);
+    }
+
+    aside {
+        background-color: var(--tertiary-color);
+        color: var(--dark-color);
+
+        a {
+            color: var(--dark-color);
+        }
+    }
+
+    legend {
+        font-size: var(--font-size-xl);
+        font-weight: bold;
+    }
+
+    .button {
+        display: inline-flex;
+        place-items: center;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        padding: 0.5rem calc(var(--block-spacing-horizontal)*3);
+        border: none;
+        justify-content: center;
+        text-wrap: nowrap;
+        transition: background-color 0.3s;
+    }
+
+    .button--primary {
+        background-color: var(--primary-color);
+        color: var(--white-color);
+    }
+
+    .button--primary:hover {
+        background-color: var(--contrast-background);
+    }
+
+    .button--secondary {
+        background-color: var(--secondary-color);
+        color: var(--white-color);
+        border: none;
+    }
+
+    .button--secondary:hover {
+        background-color: var(--contrast-background);
+    }
+
+    thead {
+        .actions.grid {
+            place-items: center;
+        }
+    }
+
+    .coverpage {
+        display: grid;
+        background-color: var(--primary-color);
+        color: var(--white-color);
+        text-align: center;
+        padding: 1rem;
+        gap: 1rem;
+        margin-bottom: var(--block-spacing-vertical);
+    }
+
+}

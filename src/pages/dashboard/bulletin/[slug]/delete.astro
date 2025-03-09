@@ -1,0 +1,15 @@
+---
+import { actions } from 'astro:actions'
+const { slug } = Astro.params
+
+if (Astro.request.method === 'DELETE') {
+  try {
+    const status = await actions.bulletin.delete({slug: slug ?? ''})
+    console.log('status', status)
+    return Astro.redirect('/dashboard')
+  } catch (error) {
+    console.log('error', error)
+    console.error(error)
+  }
+}
+---

@@ -1,0 +1,150 @@
+---
+export const partial = true
+
+import { serviceTypes } from '@data/settings'
+import { bibleVersions } from '@data/settings'
+
+// calculate the date of the next sunday
+const nextSunday = new Date()
+nextSunday.setDate(nextSunday.getDate() + ((7 - nextSunday.getDay()) % 7))
+const formattedDate =
+  nextSunday.getFullYear() +
+  '-' +
+  (nextSunday.getMonth() + 1).toString().padStart(2, '0') +
+  '-' +
+  nextSunday.getDate().toString().padStart(2, '0')
+
+console.log(formattedDate)
+---
+
+<article>
+  <div class='errors'>
+    <!-- loop through errors -->
+    <p>There was an error with your submission</p>
+    <p id='errors'></p>
+  </div>
+  <form class='form' id='bulletin-form' method='POST'>
+    <p class='form__intro'>Use this form to submit a bulletin.</p>
+    <div class='form-group'>
+      <label for='coverImageUrl'>CoverImageUrl</label>
+      <input
+        value='https://picsum.photos/id/24/560/315'
+        type='text'
+        id='coverImageUrl'
+        name='coverImageUrl'
+      />
+    </div>
+    <div class='form-group'>
+      <label for='sermonDate'>Sermon Date</label>
+      <input
+        type='date'
+        id='sermonDate'
+        name='sermonDate'
+        value=`${formattedDate}`
+      />
+    </div>
+    <!-- serviceType field -->
+    <div class='form-group'>
+      <label for='serviceType'>Service Type</label>
+      <select id='serviceType' name='serviceType'>
+        {
+          serviceTypes.map((serviceType) => (
+            <option
+              value={serviceType}
+              selected={serviceType === 'Sunday Service'}
+            >
+              {serviceType}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+    <!-- sermonTitle Field -->
+    <div class='form-group'>
+      <label for='sermonTitle'>Sermon Title</label>
+      <input type='text' id='sermonTitle' name='sermonTitle' />
+    </div>
+    <!-- sermonPreacher Field -->
+    <div class='form-group'>
+      <label for='sermonPreacher'>Sermon Preacher</label>
+      <input type='text' id='sermonPreacher' name='sermonPreacher' />
+    </div>
+
+    <fieldset>
+      <legend>Bible Reading</legend>
+      <div class='form-group'>
+        <label for='bibleReadingVerse'>Bible Reading Verse</label>
+        <input
+          type='text'
+          class='form-control'
+          id='bibleReadingVerse'
+          name='bibleReadingVerse'
+        />
+      </div>
+      <div class='form-group'>
+        <label for='bibleReadingText'>Bible Reading Text</label>
+        <textarea
+          class='form-control'
+          id='bibleReadingText'
+          name='bibleReadingText'></textarea>
+      </div>
+      <div class='form-group'>
+        <label for='bibleVersion'>Bible Version</label>
+        <select id='bibleVersion' name='bibleVersion'>
+          {
+            bibleVersions.map((bibleVersion) => (
+              <option value={bibleVersion} selected={bibleVersion === 'NIV'}>
+                {bibleVersion}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>First Hymn</legend>
+      <div class='form-group'>
+        <label for='firstHymnTitle'>First Hymn Title</label>
+        <input type='text' id='firstHymnTitle' name='firstHymnTitle' />
+      </div>
+      <div class='form-group'>
+        <label for='firstHymnLyrics'>First Hymn Lyrics</label>
+        <textarea id='firstHymnLyrics' name='firstHymnLyrics'></textarea>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Closing Hymn</legend>
+      <div class='form-group'>
+        <label for='closingHymnTitle'>Closing Hymn Title</label>
+        <input type='text' id='closingHymnTitle' name='closingHymnTitle' />
+      </div>
+      <div class='form-group'>
+        <label for='closingHymnLyrics'>Closing Hymn Lyrics</label>
+        <textarea id='closingHymnLyrics' name='closingHymnLyrics'></textarea>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Announcements</legend>
+      <div class='form-group'>
+        <label for='announcements'>Announcements</label>
+        <textarea id='announcements' name='announcements'></textarea>
+      </div>
+      <div class='form-group'>
+        <label for='birthdays'>Birthdays</label>
+        <textarea id='birthdays' name='birthdays'></textarea>
+      </div>
+    </fieldset>
+    <div class='grid form-group'>
+      <div></div>
+      <div class='grid button-group__right'>
+        <button type='reset' class='button button--secondary'>Cancel</button>
+        <button
+          type='submit'
+          class='button button--primary'
+          hx-post='/dashboard/bulletin/create'
+          hx-target='#dashboard'>Submit</button
+        >
+      </div>
+    </div>
+  </form>
+</article>
