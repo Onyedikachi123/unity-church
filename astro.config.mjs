@@ -1,7 +1,7 @@
-import { defineConfig } from 'astro/config'
-import db from '@astrojs/db'
-import icon from 'astro-icon'
-import vercel from '@astrojs/vercel/serverless'
+import { defineConfig } from 'astro/config';
+import db from '@astrojs/db';
+import icon from 'astro-icon';
+import vercel from '@astrojs/vercel/serverless';
 
 export default defineConfig({
   integrations: [db(), icon()],
@@ -9,7 +9,5 @@ export default defineConfig({
     actions: true
   },
   output: 'server',
-  adapter: vercel({
-    runtime: 'nodejs18.x' 
-  })
-})
+  adapter: vercel()
+});
